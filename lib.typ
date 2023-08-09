@@ -1,42 +1,3 @@
-/// Computes a set of statistical measures for an array.
-/// Includes: average, median, integer mode, variance, standard deviation, and some percentiles.
-///
-/// - arr (array): Array of numbers.
-/// -> dictionary
-#let arrayStats(arr) = {
-  (
-    "avg": arrayAvg(arr),
-    "median": arrayMedian(arr),
-    "intMode": arrayIntMode(arr),
-    "var": arrayVar(arr),
-    "std": arrayStd(arr),
-    "25percentile": arrayPercentile(arr, 0.25),
-    "50percentile": arrayPercentile(arr, 0.50),
-    "75percentile": arrayPercentile(arr, 0.75),
-    "95percentile": arrayPercentile(arr, 0.95),
-  )
-}
-
-/// Computes a set of statistical measures for a specific column in a dataset.
-/// Includes: average, median, integer mode, variance, standard deviation, and some percentiles.
-///
-/// - data (array): The dataset.
-/// - colId (int): The identifier for the column.
-/// -> dictionary
-#let stats(data, colId) = {
-  (
-    "avg": avg(data, colId),
-    "median": median(data, colId),
-    "intMode": intMode(data, colId),
-    "var": var(data, colId),
-    "std": std(data, colId),
-    "25percentile": percentile(data, colId, 0.25),
-    "50percentile": percentile(data, colId, 0.50),
-    "75percentile": percentile(data, colId, 0.75),
-    "95percentile": percentile(data, colId, 0.95),
-  )
-}
-
 /// Extracts a specific column from the given dataset based on the column.
 /// 
 /// - data (array): The dataset.
@@ -57,7 +18,11 @@
 #let tofloatArray(arr) = {
   let res = ()
   for el in arr {
-    res.push(float(el))
+    if el == "" {
+      res.push(0.0)
+    } else {
+      res.push(float(el))
+    }
   }
   res
 }
@@ -69,7 +34,11 @@
 #let toIntArray(arr) = {
   let res = ()
   for el in arr {
-    res.push(int(el))
+    if el == "" {
+      res.push(0)
+    } else {
+      res.push(int(el))
+    }
   }
   res
 }
@@ -247,4 +216,43 @@
 /// -> float
 #let percentile(data, colId, p) = {
   arrayPercentile(extractColumn(data, colId), p)
+}
+
+/// Computes a set of statistical measures for an array.
+/// Includes: average, median, integer mode, variance, standard deviation, and some percentiles.
+///
+/// - arr (array): Array of numbers.
+/// -> dictionary
+#let arrayStats(arr) = {
+  (
+    "avg": arrayAvg(arr),
+    "median": arrayMedian(arr),
+    "intMode": arrayIntMode(arr),
+    "var": arrayVar(arr),
+    "std": arrayStd(arr),
+    "25percentile": arrayPercentile(arr, 0.25),
+    "50percentile": arrayPercentile(arr, 0.50),
+    "75percentile": arrayPercentile(arr, 0.75),
+    "95percentile": arrayPercentile(arr, 0.95),
+  )
+}
+
+/// Computes a set of statistical measures for a specific column in a dataset.
+/// Includes: average, median, integer mode, variance, standard deviation, and some percentiles.
+///
+/// - data (array): The dataset.
+/// - colId (int): The identifier for the column.
+/// -> dictionary
+#let stats(data, colId) = {
+  (
+    "avg": avg(data, colId),
+    "median": median(data, colId),
+    "intMode": intMode(data, colId),
+    "var": var(data, colId),
+    "std": std(data, colId),
+    "25percentile": percentile(data, colId, 0.25),
+    "50percentile": percentile(data, colId, 0.50),
+    "75percentile": percentile(data, colId, 0.75),
+    "95percentile": percentile(data, colId, 0.95),
+  )
 }
