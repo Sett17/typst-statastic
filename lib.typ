@@ -25,15 +25,15 @@
 /// -> dictionary
 #let stats(data, colId) = {
   (
-    "avg": Avg(data, colId),
-    "median": Median(data, colId),
-    "intMode": IntMode(data, colId),
-    "var": Var(data, colId),
-    "std": Std(data, colId),
-    "25percentile": Percentile(data, colId, 0.25),
-    "50percentile": Percentile(data, colId, 0.50),
-    "75percentile": Percentile(data, colId, 0.75),
-    "95percentile": Percentile(data, colId, 0.95),
+    "avg": avg(data, colId),
+    "median": median(data, colId),
+    "intMode": intMode(data, colId),
+    "var": var(data, colId),
+    "std": std(data, colId),
+    "25percentile": percentile(data, colId, 0.25),
+    "50percentile": percentile(data, colId, 0.50),
+    "75percentile": percentile(data, colId, 0.75),
+    "95percentile": percentile(data, colId, 0.95),
   )
 }
 
