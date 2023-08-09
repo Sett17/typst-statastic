@@ -139,6 +139,7 @@
 }
 
 /// Calculates the mode of an integer array.
+/// Converts all floats to integers.
 ///
 /// - arr (array): Array of integers.
 /// -> array
@@ -167,12 +168,13 @@
   modes
 }
 
-/// Calculates the mode of a specific column in a dataset.
+/// Calculates the integer mode of a specific column in a dataset.
+/// Converts all floats to integers.
 ///
 /// - data (array): The dataset.
 /// - colId (int): The identifier for the column.
 /// -> array
-#let mode(data, colId) = {
+#let intMode(data, colId) = {
   arrayIntMode(toIntArray(tofloatArray((extractColumn(data, colId)))))
 }
 

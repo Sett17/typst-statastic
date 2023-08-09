@@ -45,4 +45,4 @@ jobs:
 
     - name: Push changes to dev branch in package repo
       run: |
-        git push origin sync
+        git push origin sync --force
