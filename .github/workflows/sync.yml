@@ -30,8 +30,9 @@ jobs:
         git remote add dev-repo https://github.com/Sett17/typst-statastic.git
         git fetch dev-repo
         mkdir -p $TARGET_DIR
-        git checkout dev-repo/main -- $FILES_TO_SYNC
-        mv $FILES_TO_SYNC $TARGET_DIR/
+        for file in $FILES_TO_SYNC; do
+          git show dev-repo/main:$file > $TARGET_DIR/$file
+        done
 
     - name: Set Git user
       run: |
