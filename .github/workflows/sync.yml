@@ -1,0 +1,48 @@
+name: Sync with Package Repo
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  FILES_TO_SYNC: README.md LICENSE typst.toml lib.typ
+  TARGET_DIR: packages/preview/statastic-0.1.0
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout package repo
+      uses: actions/checkout@v2
+      with:
+        repository: Sett17/packages
+        token: ${{ secrets.CI_PUSH_TOKEN }}
+        fetch-depth: 0
+
+    - name: Create or checkout dev branch
+      run: |
+        git checkout -B dev
+
+    - name: Fetch and checkout specific files from dev repo
+      run: |
+        git remote add dev-repo https://github.com/Sett17/typst-statastic.git
+        git fetch dev-repo
+        mkdir -p $TARGET_DIR
+        git checkout dev-repo/main -- $FILES_TO_SYNC
+        mv $FILES_TO_SYNC $TARGET_DIR/
+
+    - name: Set Git user
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+
+    - name: Commit changes
+      run: |
+        git add $TARGET_DIR
+        git commit -m "Sync from dev repo: $(git log dev-repo/main -1 --pretty=format:'%h - %s')"
+
+    - name: Push changes to dev branch in package repo
+      run: |
+        git push origin dev
